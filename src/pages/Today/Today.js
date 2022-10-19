@@ -3,6 +3,7 @@ import TodayHabit from "../../components/TodayHabit"
 import axios from "axios"
 import { todayContext, userContext } from "../../App"
 import React, { useContext } from "react"
+import { BASE_URL } from "../../assets/constants/constants"
 import dayjs from "dayjs"
 import Footer from "../../components/Footer"
 import { StyledTodayPage, StyledHabitsPresentation } from "./Todaycss"
@@ -16,6 +17,8 @@ export default function Today() {
     const now = dayjs();
     const days = ["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-feira", "Sábado"];
     const [completeMessage, setCompleteMessage] = React.useState("Nenhum hábito concluído ainda");
+    const [newMarked, setNewMarked] = React.useState(0);
+    const [loading, setLoading] = React.useState(false);
     const navigate = useNavigate();
 
     const [userTodayHabits, setUserTodayHabits] = React.useState([]);
@@ -27,19 +30,12 @@ export default function Today() {
     }
 
     React.useEffect(() => {
-        const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today", headers);
-        promise.then(response => {
-            setUserTodayHabits(response.data);
-            let aux = 0;
-            for(let i = 0; i < userTodayHabits.length; i++)
-                if(userTodayHabits[i].done) {
-                    console.log("Oi");
-                    aux++;
-                }
-            setCompleted([aux, userTodayHabits.length]);
-        })
-        promise.catch(() => navigate("/"));
-    }, []);
+        let aux = 0;
+        for(let i = 0; i < userTodayHabits.length; i++)
+            if(userTodayHabits[i].done) 
+                aux++;
+        setCompleted([aux, userTodayHabits.length]);
+    }, [userTodayHabits])
 
     React.useEffect(() => {
         if(completed[0] === 0)
@@ -48,17 +44,26 @@ export default function Today() {
             setCompleteMessage(`${Math.ceil(100 * completed[0]/userTodayHabits.length)}% dos hábitos concluídos`);
     },[completed])
 
+
+    function loadDailyHabits() {
+        setLoading(true);
+        const promise = axios.get(BASE_URL + "habits/today", headers);
+        promise.then(response => {setLoading(false); setUserTodayHabits(response.data)})
+        promise.catch(() => navigate("/"));
+    }
+    React.useEffect(loadDailyHabits, []); 
+    
     return (
         <>
         <Header/>
         <StyledTodayPage completed={completed}>
             <StyledHabitsPresentation>
-                <h2>{days[now.day()]}, {now.format("DD/MM")}</h2>
-                <h4>{completeMessage}</h4>
-                {userTodayHabits.map(value=> <TodayHabit key={value.id} data={value}/>)}
+                <h2 data-identifier="today-infos">{days[now.day()]}, {now.format("DD/MM")}</h2>
+                <h4 data-identifier="today-infos">{completeMessage}</h4>
+                {userTodayHabits.map(value=> <TodayHabit setLoading={setLoading} loading={loading} loadDailyHabits={loadDailyHabits} userTodayHabitsSize={userTodayHabits.length} key={value.id} data={value}/>)}
             </StyledHabitsPresentation>
         </StyledTodayPage>
-        <Footer/>
+        <Footer newMarked={newMarked} setLoading={setLoading} loading={loading}/>
         </>
     )
 }

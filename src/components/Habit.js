@@ -17,16 +17,18 @@ export default function Habit({setExcludedHabits, excludedHabits, data}) {
     }
 
     function handleDeletion() {
-        axios.delete(BASE_URL + `/habits/${data.id}`, headers)
-        .then(() => setExcludedHabits(excludedHabits+1))
-        .catch(e => console.log(e))
+        if(window.confirm("Realmente deseja deletar esse hábito?")) {
+            axios.delete(BASE_URL + `habits/${data.id}`, headers)
+            .then(() => setExcludedHabits(excludedHabits+1))
+            .catch(e => console.log(e))
+        }
     }
 
     return (
         <StyledHabit>
             <div>
-                <h3>{data.name}</h3>
-                <TrashOutline onClick={handleDeletion}/>
+                <h3 data-identifier="habit-name">{data.name}</h3>
+                <TrashOutline data-identifier="delete-habit-btn" onClick={handleDeletion}/>
             </div>
             {days.map((value, index) => <StyledDayButton key={index} index={index} selectedDays={data.days}>{value}</StyledDayButton>)}
         </StyledHabit>

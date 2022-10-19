@@ -24,25 +24,24 @@ export default function LoginPage({setUserData}) {
 
     function handleLogin(e) {
         login = true;
-        const promise = axios.post(BASE_URL + "/auth/login", userLoginData)
+        const promise = axios.post(BASE_URL + "auth/login", userLoginData)
         promise.then(response => {
             setUserData(response.data)
             navigate("/hoje")
         })
         promise.catch(e => {
             login = false;
-            alert("Os dados dispostos não correspondem a nenhuma conta cadastrada. Cheque a digitação e tente novamente.");
-            console.log(e);
+            alert(e.response.data.message);
         })
     }
 
     return (
         <StyledLoginPage>
             <img src={logo}></img>
-            <input disabled={login} onChange={e => handleChange(e)} value={userLoginData.email} name="email" type="email" placeholder="email"/>
-            <input disabled={login} onChange={e => handleChange(e)}  value={userLoginData.password} name="password" type="password" placeholder="senha"/>
-            <button disabled={login} onClick={handleLogin}>{(login ? <ThreeDots color="white"/> : "Entrar")}</button>
-            <Link to='/cadastro'>Não tem uma conta? Cadastre-se!</Link>
+            <input data-identifier="input-email" disabled={login} onChange={e => handleChange(e)} value={userLoginData.email} name="email" type="email" placeholder="email"/>
+            <input data-identifier="input-password" disabled={login} onChange={e => handleChange(e)}  value={userLoginData.password} name="password" type="password" placeholder="senha"/>
+            <button data-identifier="login-btn" disabled={login} onClick={handleLogin}>{(login ? <ThreeDots color="white"/> : "Entrar")}</button>
+            <Link data-identifier="sign-up-action" to='/cadastro'>Não tem uma conta? Cadastre-se!</Link>
         </StyledLoginPage>
     )
 

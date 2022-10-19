@@ -9,7 +9,7 @@ import { userContext } from "../App";
 import { useContext } from "react";
 import { ThreeDots } from "react-loader-spinner";
 
-export default function HabitCreation({creating, setCreating}) {
+export default function HabitCreation({excludedHabits, setExcludedHabits, creating, setCreating}) {
     
     const days = ["D", "S", "T", "Q", "Q", "S", "S"];
     const [selectedDays, setSelectedDays] = React.useState([]);
@@ -24,7 +24,6 @@ export default function HabitCreation({creating, setCreating}) {
     }
 
     function handleSelection(index) {
-        console.log(index)
         if(selectedDays.some(value => value === index))
             setSelectedDays(selectedDays.filter(value => value != index));
         else
@@ -37,8 +36,13 @@ export default function HabitCreation({creating, setCreating}) {
             "name": habitName,
             "days": selectedDays
         }
-        const promise = axios.post(BASE_URL + "/habits", objPOST, headers);
-        promise.then(() => setLoading(false))
+        const promise = axios.post(BASE_URL + "habits", objPOST, headers);
+        promise.then(() => {
+            setLoading(false);
+            setExcludedHabits(excludedHabits + 1);
+            setHabitName("");
+            setSelectedDays([]);
+        })
         promise.catch((e) => {
             const aux = String(e.response.data.message);
             alert("Ops! Algo deu errado: " + {aux})
@@ -47,13 +51,13 @@ export default function HabitCreation({creating, setCreating}) {
 
     return (
         <StyledHabitCreation creating={creating}>
-            <input onChange={(e) => setHabitName(e.target.value)} value={habitName} type="text" placeholder="nome do hábito"></input>
+            <input data-identifier="input-habit-name" onChange={(e) => setHabitName(e.target.value)} value={habitName} type="text" placeholder="nome do hábito"></input>
             <div>
-            {days.map((value, index) => <StyledDayButton disabled={loading} index={index} selectedDays={selectedDays} onClick={() => handleSelection(index)} key={index}>{value}</StyledDayButton>)}
+            {days.map((value, index) => <StyledDayButton data-identifier="week-day-btn" disabled={loading} index={index} selectedDays={selectedDays} onClick={() => handleSelection(index)} key={index}>{value}</StyledDayButton>)}
             </div>
             <Container>
-                <StyledReversedButton onClick={() => setCreating(false)}>Cancelar</StyledReversedButton>
-                <StyledUsualButton onClick={createHabit}>{loading ? <ThreeDots color="white" width="60px"/> : "Salvar"}</StyledUsualButton>
+                <StyledReversedButton data-identifier="cancel-habit-create-btn" onClick={() => setCreating(false)}>Cancelar</StyledReversedButton>
+                <StyledUsualButton data-identifier="save-habit-create-btn" onClick={createHabit}>{loading ? <ThreeDots color="white" width="60px"/> : "Salvar"}</StyledUsualButton>
             </Container>
         </StyledHabitCreation>
     )

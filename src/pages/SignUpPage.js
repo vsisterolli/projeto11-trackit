@@ -9,7 +9,7 @@ import { BASE_URL } from "../assets/constants/constants";
 
 export default function SignUpPage() {
 
-    const [newUserData, setNewUserData] = React.useState({"email": "", "password": ""})
+    const [newUserData, setNewUserData] = React.useState({"email": "", "password": "", "name": "", "image": ""})
     const navigate = useNavigate();
 
     let loading = false;
@@ -23,20 +23,20 @@ export default function SignUpPage() {
 
     function handleSubmit() {
         loading = true;
-        const promise = axios.post(BASE_URL + "/auth/sign-up", newUserData);
+        const promise = axios.post(BASE_URL + "auth/sign-up", newUserData);
         promise.then(() => navigate("/"));
-        promise.catch(() => alert("Ops! Cheque se os dados foram inseridos corretamente."));
+        promise.catch((e) => alert("Ops! Cheque se os dados foram inseridos corretamente. " + e.response.data.message + "\n" + e.response.data.details));
     }
 
     return (
         <StyledSignUpPage>
             <img src={logo}></img>  
-            <input disabled={loading} onChange={e => handleChange(e)} value={newUserData.email} name="email" type="email" placeholder="email"/>
-            <input disabled={loading} onChange={e => handleChange(e)}  value={newUserData.password} name="password" type="password" placeholder="senha"/>
-            <input disabled={loading} onChange={e => handleChange(e)} value={newUserData.name} name="name" type="text" placeholder="nome"/>
-            <input disabled={loading} onChange={e => handleChange(e)}  value={newUserData.image} name="image" type="text" placeholder="foto"/>
+            <input data-identifier="input-email" disabled={loading} onChange={e => handleChange(e)} value={newUserData.email} name="email" type="email" placeholder="email"/>
+            <input data-identifier="input-password" disabled={loading} onChange={e => handleChange(e)}  value={newUserData.password} name="password" type="password" placeholder="senha"/>
+            <input data-identifier="input-name" disabled={loading} onChange={e => handleChange(e)} value={newUserData.name} name="name" type="text" placeholder="nome"/>
+            <input data-identifier="input-photo" disabled={loading} onChange={e => handleChange(e)}  value={newUserData.image} name="image" type="text" placeholder="foto"/>
             <button disabled={loading} onClick={handleSubmit}>{(loading ? <ThreeDots color="white"/> : "Entrar")}</button>
-            <Link to='/'>Já tem uma conta? Faça login!</Link>
+            <Link data-identifier="back-to-login-action" to='/'>Já tem uma conta? Faça login!</Link>
         </StyledSignUpPage>
     )
 

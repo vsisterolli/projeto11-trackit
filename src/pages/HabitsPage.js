@@ -9,6 +9,7 @@ import axios from "axios";
 import { BASE_URL } from "../assets/constants/constants";
 import { userContext } from "../App";
 import { useNavigate } from "react-router-dom";
+import { UsualHeaderedPage } from "../assets/styles/UsualHeaderedPage";
 
 export default function HabitsPage() {
     
@@ -24,7 +25,7 @@ export default function HabitsPage() {
         }
     }
     React.useEffect(() => {
-        axios.get(BASE_URL + "/habits", headers)
+        axios.get(BASE_URL + "habits", headers)
         .then(response => setHabits(response.data))
         .catch(() => navigate("/"));
     }, [excludedHabits])
@@ -32,17 +33,17 @@ export default function HabitsPage() {
     return (
         <>
         <Header/>
-        <StyledTodayPage>    
+        <StyledTodayPage habitsSize={habits.length}>    
             <StyledHabitsPresentation>
                 <div className="container">
                     <h2>Meus hábitos</h2>
-                    <StyledUsualButton onClick={() => setCreating(!creating)}>+</StyledUsualButton>
+                    <StyledUsualButton data-identifier="create-habit-btn" onClick={() => setCreating(!creating)}>+</StyledUsualButton>
                 </div>
-                <HabitCreation creating={creating} setCreating={setCreating}/>
+                <HabitCreation excludedHabits={excludedHabits} setExcludedHabits={setExcludedHabits} creating={creating} setCreating={setCreating}/>
                 {habits.map((value, index) => <Habit setExcludedHabits={setExcludedHabits} excludedHabits={excludedHabits} key={index} data={value}/>)}
-                <h4>Você não tem nenhum hábito cadastrado ainda.<br/>Adicione um hábito para começar a trackear!</h4>
+                <h4 data-identifier="no-habit-message" >Você não tem nenhum hábito cadastrado ainda.<br/>Adicione um hábito para começar a trackear!</h4>
             </StyledHabitsPresentation>
-            <Footer/>
+            <Footer loading={undefined} setLoading={(aux) => console.log("Oi")} newDeleted={excludedHabits}/>
         </StyledTodayPage>
         </>
     )
@@ -50,7 +51,6 @@ export default function HabitsPage() {
 
 export const StyledHabitsPresentation = styled.div`
     padding-top: 28px;
-    width: 90vw;
     max-width: 600px;
     margin: 0 auto;
     .container {        
@@ -66,11 +66,7 @@ export const StyledUsualButton = styled(UsualButton)`
     height: 35px;
 `
 
-export const StyledTodayPage = styled.section`
-    height: calc(100vh - 140px);
-    max-height: calc(100vh - 140px);
-    overflow: auto;
-    background-color: #f5f5f5;
+export const StyledTodayPage = styled(UsualHeaderedPage)`
     h2 {
         font-family: 'Lexend Deca';
         font-style: normal;
@@ -80,6 +76,7 @@ export const StyledTodayPage = styled.section`
         color: #126BA5;
     }
     h4 {
+        display: ${props => props.habitsSize > 0 ? "none" : "initial"};
         font-family: 'Lexend Deca';
         font-style: normal;
         font-size: 17.976px;

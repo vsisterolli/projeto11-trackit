@@ -8,7 +8,7 @@ export default function Header() {
 
     return(
         <>
-        <StyledHeader image={userData.image}>
+        <StyledHeader data-identifier="avatar" image={userData.image}>
             <h1>TrackIt</h1>
             <img src={userData.image} alt="user profile picture"/>
         </StyledHeader>

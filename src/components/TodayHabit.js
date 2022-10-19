@@ -6,36 +6,39 @@ import { useContext } from "react";
 import axios from "axios";
 import { BASE_URL } from "../assets/constants/constants";
 
-export default function TodayHabit({data}) {
+export default function TodayHabit({loadDailyHabits, loading, setLoading, userTodayHabitsSize, data}) {
     
     const [marked, setMarked] = React.useState((data.done === true));
     const [completed, setCompleted] = useContext(todayContext);
 
-    const user = useContext(userContext);
+    console.log(data);  
 
-    console.log(completed)
+    const user = useContext(userContext);
+    const headers = {
+        "headers": {
+            "Authorization": `Bearer ${user.token}`
+        }
+    }
 
     function handleCompletion() {
+        setLoading(true);
         setMarked(!marked);
-        setCompleted([completed[0] + (marked ? -1 : 1), completed[1]]);
-        const headers = {
-            headers: {
-                "Authorization": `Bearer ${user.token}`
-            }
-        }
-        const promise = axios.post(BASE_URL + `habits/${data.id}/${marked ? "uncheck" : "check"}`);
-        promise.then(response => console.log(response.data)).catch(e => console.log(e));
+
+        setCompleted([completed[0] + (marked ? -1 : 1), userTodayHabitsSize]);
+        const promise = axios.post(BASE_URL + `habits/${data.id}/${marked ? "uncheck" : "check"}`, {}, headers);
+        promise.then(() => loadDailyHabits()).catch(e => console.log(e));
+        setLoading(false);
     }
     
     return (
-        <StyledHabit marked={marked} record={data.highestSequence === data.currentSequence}>
+        <StyledHabit data-identifier="today-infos" marked={marked} record={data.highestSequence === data.currentSequence}>
             <div className="container">
                 <div className="text">
                     <h3>{data.name}</h3>
                     <h5>Sequência atual: <span className="done">{data.currentSequence} {data.currentSequence == 1 ? "dia" : "dias"}</span></h5>
                     <h5>Seu recorde: <span className="record">{data.highestSequence} {data.highestSequence == 1 ? "dia" : "dias"}</span></h5>
                 </div>
-                <button onClick={handleCompletion} className="habit-made-mark">
+                <button data-identifier="done-habit-btn" disabled={loading} onClick={handleCompletion} className="habit-made-mark">
                     <CheckmarkOutline/>
                 </button>
             </div>
