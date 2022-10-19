@@ -1,10 +1,12 @@
 import logo from "../assets/imgs/logo.png"
 import { Link, useNavigate } from "react-router-dom"
-import { BUTTON_BACKGROUND } from "../assets/styles/colors"
+import { BUTTON_BACKGROUND } from "../assets/constants/colors"
 import styled from "styled-components"
 import React from "react"
 import { ThreeDots } from "react-loader-spinner"
 import axios from "axios"
+import { BASE_URL } from "../assets/constants/constants"
+
 
 export default function LoginPage({setUserData}) {
 
@@ -22,7 +24,7 @@ export default function LoginPage({setUserData}) {
 
     function handleLogin(e) {
         login = true;
-        const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", userLoginData)
+        const promise = axios.post(BASE_URL + "/auth/login", userLoginData)
         promise.then(response => {
             setUserData(response.data)
             navigate("/hoje")

@@ -2,9 +2,10 @@ import logo from "../assets/imgs/logo.png"
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { BUTTON_BACKGROUND } from "../assets/styles/colors";
+import { BUTTON_BACKGROUND } from "../assets/constants/colors";
 import {ThreeDots} from "react-loader-spinner";
 import axios from "axios";
+import { BASE_URL } from "../assets/constants/constants";
 
 export default function SignUpPage() {
 
@@ -22,7 +23,7 @@ export default function SignUpPage() {
 
     function handleSubmit() {
         loading = true;
-        const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up", newUserData);
+        const promise = axios.post(BASE_URL + "/auth/sign-up", newUserData);
         promise.then(() => navigate("/"));
         promise.catch(() => alert("Ops! Cheque se os dados foram inseridos corretamente."));
     }

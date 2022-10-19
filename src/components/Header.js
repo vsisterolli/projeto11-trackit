@@ -5,20 +5,29 @@ import { userContext } from "../App";
 export default function Header() {
 
     const userData = useContext(userContext);
-    console.log("Bacana!")
-    console.log(userData);
 
     return(
+        <>
         <StyledHeader image={userData.image}>
             <h1>TrackIt</h1>
             <img src={userData.image} alt="user profile picture"/>
         </StyledHeader>
+        <FakeHeader/>
+        </>
     )
 }
+
+const FakeHeader = styled.header`
+    height: 70px;
+`
 
 const StyledHeader = styled.header`
 
     display: flex;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
     align-items: center;
     justify-content: space-between;
     padding: 18px;
