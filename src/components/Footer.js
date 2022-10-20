@@ -1,4 +1,4 @@
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
@@ -13,24 +13,41 @@ export default function Footer({loading, setLoading, newDeleted, newMarked}) {
     const [percentage, setPercentage] = useContext(todayContext);
     const [userTodayHabits, setUserTodayHabits] = React.useState([]);
     const navigate = useNavigate("/");
-    const user = useContext(userContext);
+    const [user, setUser] = useContext(userContext);
     const headers = {
         headers: {
             "Authorization": `Bearer ${user.token}`
         }
     }
 
-    /*
-        The Footer also have an independant API comunicator so it get's updated even when not in the "Today" route
-    */
-   
+
+          
+
     React.useEffect(() => {
-        if(setLoading === "aoba")
+        
+        // As the footer will be available in all pages, he will be responsible to recover the user data
+        if(JSON.stringify(user) === "{}") {
+            const userStorage = localStorage;
+            if(userStorage.getItem("previous_login") === null)
+                navigate("/");
+            else
+                setUser(JSON.parse(userStorage.getItem("previous_login")));
+        }
+
+        // I used setLoading as a flag, if we are already in "History" page, then no need to the footer reupdate the habits since the page will not
+        // produce any action that is going to change the habits
+        if(setLoading === "don't load! user is in history page") 
             return;
+
+        // The footer will keep the Today's data even if the user it's in another page
         setLoading(true);
-        const promise = axios.get(BASE_URL + "habits/today", headers);
-        promise.then(response => {setLoading(false); setUserTodayHabits(response.data)})
-        promise.catch(() => navigate("/"));
+        
+        if(JSON.stringify(user) !== "{}") {
+            const promise = axios.get(BASE_URL + "habits/today", headers);
+            promise.then(response => {setLoading(false); setUserTodayHabits(response.data)})
+            promise.catch((e) => console.log(e))
+        }
+
     }, [newDeleted, newMarked]);
 
     React.useEffect(() => {

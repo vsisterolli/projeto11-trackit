@@ -1,11 +1,10 @@
-import logo from "../assets/imgs/logo.png"
+import logo from "../../assets/imgs/logo.png"
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import { BUTTON_BACKGROUND } from "../assets/constants/colors";
+import { StyledSignUpPage } from "./SignUpPageStyle";
 import {ThreeDots} from "react-loader-spinner";
 import axios from "axios";
-import { BASE_URL } from "../assets/constants/constants";
+import { BASE_URL } from "../../assets/constants/constants";
 
 export default function SignUpPage() {
 
@@ -30,7 +29,7 @@ export default function SignUpPage() {
 
     return (
         <StyledSignUpPage>
-            <img src={logo}></img>  
+            <img alt="track-it logo" src={logo}></img>  
             <input data-identifier="input-email" disabled={loading} onChange={e => handleChange(e)} value={newUserData.email} name="email" type="email" placeholder="email"/>
             <input data-identifier="input-password" disabled={loading} onChange={e => handleChange(e)}  value={newUserData.password} name="password" type="password" placeholder="senha"/>
             <input data-identifier="input-name" disabled={loading} onChange={e => handleChange(e)} value={newUserData.name} name="name" type="text" placeholder="nome"/>
@@ -42,67 +41,3 @@ export default function SignUpPage() {
 
 }
 
-const StyledSignUpPage = styled.section`
-    
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    height: 100vh;
-    
-    img {
-        margin-bottom: 33px;
-    }
-    
-    form {
-        display: flex;
-        flex-direction: column;
-    }
-
-    input {
-        border: 1px solid #D5D5D5;
-        border-radius: 5px;
-        font-family: 'Lexend Deca';
-        font-size: 19.976px;
-        line-height: 25px;
-        height: 45px;
-        padding: 11px;
-        width: 303px;
-        margin-bottom: 6px;
-        input::placeholder {
-            color: #DBDBDB;
-        }
-    }
-
-    button {
-        width: 303px;
-        height: 45px;
-        border: 0px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: ${BUTTON_BACKGROUND};
-        border-radius: 4.63636px;
-        cursor: pointer;
-        font-family: 'Lexend Deca';
-        font-size: 20.976px;
-        line-height: 26px;
-        color: #FFFFFF;
-    }
-
-    a {
-        color: #52B6FF;
-        font-family: 'Lexend Deca';
-        font-size: 18px;
-        line-height: 17px;
-        margin-top: 36px;
-        color: #52B6FF;
-    }
-
-    @media (max-width: 900px) {
-        a {
-            font-size: 14px;
-        }
-    }
-
-`

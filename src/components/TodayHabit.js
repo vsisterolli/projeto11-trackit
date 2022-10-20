@@ -11,9 +11,7 @@ export default function TodayHabit({loadDailyHabits, loading, setLoading, userTo
     const [marked, setMarked] = React.useState((data.done === true));
     const [completed, setCompleted] = useContext(todayContext);
 
-    console.log(data);  
-
-    const user = useContext(userContext);
+    const [user, setUser] = useContext(userContext);
     const headers = {
         "headers": {
             "Authorization": `Bearer ${user.token}`
@@ -35,8 +33,8 @@ export default function TodayHabit({loadDailyHabits, loading, setLoading, userTo
             <div className="container">
                 <div className="text">
                     <h3>{data.name}</h3>
-                    <h5>Sequência atual: <span className="done">{data.currentSequence} {data.currentSequence == 1 ? "dia" : "dias"}</span></h5>
-                    <h5>Seu recorde: <span className="record">{data.highestSequence} {data.highestSequence == 1 ? "dia" : "dias"}</span></h5>
+                    <h5>Sequência atual: <span className="done">{data.currentSequence} {data.currentSequence === 1 ? "dia" : "dias"}</span></h5>
+                    <h5>Seu recorde: <span className="record">{data.highestSequence} {data.highestSequence === 1 ? "dia" : "dias"}</span></h5>
                 </div>
                 <button data-identifier="done-habit-btn" disabled={loading} onClick={handleCompletion} className="habit-made-mark">
                     <CheckmarkOutline/>

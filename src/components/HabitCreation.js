@@ -16,7 +16,7 @@ export default function HabitCreation({excludedHabits, setExcludedHabits, creati
     const [habitName, setHabitName] = React.useState("");
     const [loading, setLoading] = React.useState(false);
 
-    const user = useContext(userContext);
+    const [user, setUser] = useContext(userContext);
     const headers = {
         headers: {
             "Authorization": `Bearer ${user.token}`

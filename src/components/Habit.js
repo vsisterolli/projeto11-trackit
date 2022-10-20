@@ -9,7 +9,7 @@ import { userContext } from "../App";
 export default function Habit({setExcludedHabits, excludedHabits, data}) {
 
     const days = ["D", "S", "T", "Q", "Q", "S", "S"];
-    const user = useContext(userContext);
+    const [user, setUser] = useContext(userContext);
     const headers = {
         "headers": {
             "Authorization": `Bearer ${user.token}`

@@ -6,12 +6,12 @@ import React, { useContext } from "react"
 import { BASE_URL } from "../../assets/constants/constants"
 import dayjs from "dayjs"
 import Footer from "../../components/Footer"
-import { StyledTodayPage, StyledHabitsPresentation } from "./Todaycss"
+import { StyledTodayPage, StyledHabitsPresentation } from "./TodayStyle"
 import { useNavigate } from "react-router-dom"
 
 export default function Today() {
 
-    const user = useContext(userContext);
+    const [user, setUser] = useContext(userContext);
     const [completed, setCompleted] = useContext(todayContext);
 
     const now = dayjs();
@@ -46,12 +46,14 @@ export default function Today() {
 
 
     function loadDailyHabits() {
+        if(JSON.stringify(user) === "{}")
+            return;
         setLoading(true);
         const promise = axios.get(BASE_URL + "habits/today", headers);
         promise.then(response => {setLoading(false); setUserTodayHabits(response.data)})
-        promise.catch(() => navigate("/"));
+        .catch((e) => console.log(e))
     }
-    React.useEffect(loadDailyHabits, []); 
+    React.useEffect(loadDailyHabits, [user]); 
     
     return (
         <>

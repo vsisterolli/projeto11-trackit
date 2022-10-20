@@ -1,18 +1,18 @@
-import LoginPage from "./pages/LoginPage"
+import LoginPage from "./pages/LoginPage/LoginPage";
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import GlobalStyle from "./assets/styles/GlobalStyle"
 import React, { createContext } from "react";
-import History from "./pages/History";
+import History from "./pages/History/History";
 import Today from "./pages/Today/Today";
-import SignUpPage from "./pages/SignUpPage";
-import HabitsPage from "./pages/HabitsPage";
+import SignUpPage from "./pages/SignUpPage/SignUpPage";
+import HabitsPage from "./pages/HabitsPage/HabitsPage";
 
 export const userContext = createContext(null);
 export const todayContext = createContext(null);
 
 export default function App() {
 
-  const [userData, setUserData] = React.useState({});
+  const userData = React.useState({});
   const todayDataState = React.useState([0, 0]);
 
   return (
@@ -21,7 +21,7 @@ export default function App() {
       <userContext.Provider value={userData}>
       <todayContext.Provider value={todayDataState}>
         <Routes>
-          <Route path="/" element={<LoginPage userData={userData} setUserData={setUserData}/>}/>
+          <Route path="/" element={<LoginPage/>}/>
           <Route path="/cadastro" element={<SignUpPage/>}/>
           <Route path="/hoje" element={<Today/>}/>
           <Route path="/habitos" element={<HabitsPage/>}/>
