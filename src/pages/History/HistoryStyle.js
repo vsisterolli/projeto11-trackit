@@ -6,6 +6,8 @@ export const StyledHistory = styled(UsualHeaderedPage)`
 `;
 
 export const Screen = styled(UsualMobileScreen)`
+    width: 98%;
+    max-width: 100%;
     h1 {
         font-family: 'Lexend Deca';
         font-style: normal;
@@ -33,7 +35,7 @@ export const Screen = styled(UsualMobileScreen)`
         
         .react-calendar {
             background-color: white;
-            max-width: 352.594px;
+            max-width: 360px;
             border-radius: 10px;
         }
 
@@ -41,7 +43,9 @@ export const Screen = styled(UsualMobileScreen)`
             display: flex;
             align-items: center;
             justify-content: center;
-            max-width: 50px;
+            width: 46px;
+            max-width: 46px;
+            margin-left: 4px;
         }
 
         .react-calendar__month-view__days{
@@ -53,16 +57,30 @@ export const Screen = styled(UsualMobileScreen)`
             justify-content: center;
         }
 
+
         .react-calendar__tile {
-            max-width: 50px;
-            height: 50px;
+            max-width: 46px;
+            margin-left: 4px;
+            height: 46px;
             font-size: 16px;
             background-color: white;
             border: 0px;
             max-height: 100px;
             border-radius: 100px;
         }
+
+        .red {
+            background-color: #E9967A;
+        }
+
+        .yellow {
+            background-color: #FFFF8A;
+        }
         
+        .green {
+            background-color: yellowgreen;
+        }
+
         .react-calendar__navigation__label__labelText {
             font-size: 18px;
         }

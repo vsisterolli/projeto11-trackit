@@ -3,6 +3,7 @@ import styled from "styled-components"
 import { UsualHeaderedPage } from "../../assets/styles/UsualHeaderedPage"
 
 export const StyledTodayPage = styled(UsualHeaderedPage)`
+
     button {
         width: 40px;
         height: 35px;
