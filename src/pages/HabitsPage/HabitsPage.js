@@ -43,7 +43,7 @@ export default function HabitsPage() {
                 {habits.map((value, index) => <Habit setExcludedHabits={setExcludedHabits} excludedHabits={excludedHabits} key={index} data={value}/>)}
                 <h4 data-identifier="no-habit-message" >Você não tem nenhum hábito cadastrado ainda.<br/>Adicione um hábito para começar a trackear!</h4>
             </StyledHabitsPresentation>
-            <Footer loading={undefined} setLoading={(aux) => console.log("Oi")} newDeleted={excludedHabits}/>
+            <Footer loading={undefined} setLoading={(aux) => {}} newDeleted={excludedHabits}/>
         </StyledTodayPage>
         </>
     )

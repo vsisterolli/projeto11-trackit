@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom"
 
 export default function DayHistory() {
     const habits = useContext(dayContext)[0];
-    console.log(habits)
     const navigate = useNavigate();
     const [total, setTotal] = React.useState(0);
 
@@ -35,7 +34,7 @@ export default function DayHistory() {
                     {habits.map((value, index) => <SpecificDayHabit key={index} data={value}/>)}
                 </UsualMobileScreen>
             </StyledDayPage>
-            <Footer setLoading={"don't load"}/>
+            <Footer loading={undefined} setLoading={() => {}}/> 
         </>
     )
 }

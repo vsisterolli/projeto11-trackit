@@ -80,7 +80,7 @@ export default function History() {
                 </div>
             </Screen>
         </StyledHistory>
-        <Footer setLoading={"don't load"}/>
+        <Footer loading={undefined} setLoading={(aux) => {}} />
         </>
     )
 }

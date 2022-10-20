@@ -31,12 +31,10 @@ export default function Footer({loading, setLoading, newDeleted, newMarked}) {
                 setUser(JSON.parse(userStorage.getItem("previous_login")));
         }
 
-        // I used setLoading as a flag, if we are already in "History" page, then no need to the footer reupdate the habits since the page will not
+        // I used loading as a flag, if we are already in "History" page, then no need to the footer reupdate the habits since the page will not
         // produce any action that is going to change the habits
-        if(setLoading === "don't load") 
-            return;
-
         // The footer will keep the Today's data even if the user it's in another page
+
         setLoading(true);
         
         if(JSON.stringify(user) !== "{}") {

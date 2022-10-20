@@ -5,7 +5,6 @@ import React from "react";
 
 export default function SpecificDayHabit({data}) {
     
-    console.log(data)
     return (
         <StyledHabit data-identifier="today-infos" marked={data.done} record={data.highestSequence === data.currentSequence}>
             <div className="container">
