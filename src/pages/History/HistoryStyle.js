@@ -23,4 +23,72 @@ export const Screen = styled(UsualMobileScreen)`
         line-height: 22px;
         color: #666666;
     }
+
+    .calendar-container {
+
+        height: 60vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        .react-calendar {
+            background-color: white;
+            max-width: 352.594px;
+            border-radius: 10px;
+        }
+
+        .react-calendar__month-view__weekdays__weekday {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            max-width: 50px;
+        }
+
+        .react-calendar__month-view__days{
+            display: flex;
+            justify-content: center;
+        }
+        .react-calendar__month-view__weekdays{
+            display: flex;
+            justify-content: center;
+        }
+
+        .react-calendar__tile {
+            max-width: 50px;
+            height: 50px;
+            font-size: 16px;
+            background-color: white;
+            border: 0px;
+            max-height: 100px;
+            border-radius: 100px;
+        }
+        
+        .react-calendar__navigation__label__labelText {
+            font-size: 18px;
+        }
+        .react-calendar__navigation__arrow{
+            font-size: 18px;
+        }
+        .react-calendar__year-view__months__month {
+            font-size: 18px;
+            max-width: 100px;
+        }
+        .react-calendar__year-view__months {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .react-calendar__navigation {
+            display: flex;
+            padding: 10px;
+            font-size: 18px;
+            button {
+                background-color: transparent;
+                border: 0px;
+            }
+        }
+
+    }
+
 `
