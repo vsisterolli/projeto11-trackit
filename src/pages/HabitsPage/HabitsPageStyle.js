@@ -5,7 +5,8 @@ import { UsualHeaderedPage } from "../../assets/styles/UsualHeaderedPage";
 
 export const StyledHabitsPresentation = styled.div`
     padding-top: 28px;
-    max-width: 600px;
+    width: 90vw;
+    max-width: 400px;
     margin: 0 auto;
     .container {        
         display: flex;
